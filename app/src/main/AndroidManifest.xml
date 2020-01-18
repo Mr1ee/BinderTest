@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="test.lee.bindertest">
+
+    <uses-permission android:name="test.lee.bindertest.permission.ACCESS_BOOK_SERVICE" />
+
+    <permission
+        android:name="test.lee.bindertest.permission.ACCESS_BOOK_SERVICE"
+        android:label="service permission"
+        android:protectionLevel="normal" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/icon"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".SplashActivity"
+            android:noHistory="true"
+            android:theme="@style/AppTheme.Launcher">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".BookServiceActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "lee://test.lee.binder/bindertest” -->
+                <data
+                    android:host="test.lee.binder"
+                    android:pathPrefix="/s2"
+                    android:scheme="lee" />
+                <data
+                    android:host="test.lee.binder"
+                    android:pathPrefix="/s2"
+                    android:scheme="https" />
+
+                <data
+                    android:host="test.lee.binder"
+                    android:pathPrefix="/p1"
+                    android:scheme="lee" />
+                <data
+                    android:host="test.lee.binder"
+                    android:pathPrefix="/p1"
+                    android:scheme="https" />
+                <!--- adb shell am start -W -a android.intent.action.VIEW -d "lee://test.lee.binder/s2?key=123&id=456" test.lee.bindertest -->
+                <!-- note that the leading "/" is required for pathPrefix-->
+            </intent-filter>
+        </activity>
+        <!-- android:taskAffinity="test.lee.bindertest.SecondActivity"-->
+        <activity
+            android:name=".SecondActivity"
+            android:label="外链打开测试"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "lee://test.lee.binder/bindertest” -->
+                <data
+                    android:host="test.lee.binder"
+                    android:path="/sec"
+                    android:port="8080"
+                    android:scheme="lee" />
+                <!--- adb shell am start -W -a android.intent.action.VIEW -d "lee://test.lee.binder:8080/sec" test.lee.bindertest -->
+                <!-- note that the leading "/" is required for pathPrefix or path-->
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".messenger.MessengerActivity"
+            android:label="Messenger test" />
+        <activity
+            android:name=".ThirdActivity"
+            android:label="third activity" />
+
+        <service
+            android:name="test.lee.bindertest.aidl.BookManagerService"
+            android:exported="true"
+            android:permission="test.lee.bindertest.permission.ACCESS_BOOK_SERVICE"
+            android:process=":remote">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="test.lee.bindertest.aidl.BookManagerService" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".messenger.MessengerService"
+            android:process=":remote" />
+
+    </application>
+
+</manifest>
