@@ -1,7 +1,5 @@
 package test.lee.bindertest.aidl;
 
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
@@ -29,8 +27,8 @@ public abstract class AbstractBookManager extends Binder implements IBookManager
             return null;
         }
         android.os.IInterface iin = obj.queryLocalInterface(DESCRIPTOR);
-        if (((iin instanceof test.lee.bindertest.IBookManager))) {
-            return ((test.lee.bindertest.aidl.IBookManager) iin);
+        if (iin instanceof IBookManager) {
+            return ((IBookManager) iin);
         }
         return new AbstractBookManager.Proxy(obj);
     }

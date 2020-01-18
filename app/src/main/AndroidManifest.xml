@@ -87,6 +87,7 @@
 
         <service
             android:name="test.lee.bindertest.aidl.BookManagerService"
+            android:enabled="true"
             android:exported="true"
             android:permission="test.lee.bindertest.permission.ACCESS_BOOK_SERVICE"
             android:process=":remote">

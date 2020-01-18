@@ -56,7 +56,7 @@ public class BookManagerService extends Service {
             //权限验证 保证非验证请求不能通过
             int check = checkCallingOrSelfPermission("test.lee.bindertest.permission.ACCESS_BOOK_SERVICE");
             if (check == PackageManager.PERMISSION_DENIED) {
-                Log.d("lhy", "book manger service:Permission denied!!!");
+                Log.e("lhy", "book manger service:Permission denied!!!");
                 return false;
             }
 
@@ -67,7 +67,8 @@ public class BookManagerService extends Service {
             }
             //包名过滤
             if (packageName != null &&
-                    (!packageName.startsWith("test.lee") || !packageName.startsWith("me.fresh.lee"))) {
+                    !(packageName.startsWith("test.lee") || packageName.startsWith("me.fresh.lee"))) {
+                Log.e("lhy", "book manger service:Permission denied!!!");
                 return false;
             }
             return super.onTransact(code, data, reply, flags);
@@ -176,7 +177,7 @@ public class BookManagerService extends Service {
         //权限验证
         int check = checkCallingOrSelfPermission("test.lee.bindertest.permission.ACCESS_BOOK_SERVICE");
         if (check == PackageManager.PERMISSION_DENIED) {
-            Log.d("lhy", "book manger service:Permission denied!!!");
+            Log.e("lhy", "book manger service:Permission denied!!!");
             return null;
         }
         return binder;
