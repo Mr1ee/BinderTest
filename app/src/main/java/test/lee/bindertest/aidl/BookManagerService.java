@@ -66,7 +66,8 @@ public class BookManagerService extends Service {
                 packageName = packages[0];
             }
             //包名过滤
-            if (packageName != null && !packageName.startsWith("test.lee")) {
+            if (packageName != null &&
+                    (!packageName.startsWith("test.lee") || !packageName.startsWith("me.fresh.lee"))) {
                 return false;
             }
             return super.onTransact(code, data, reply, flags);
